@@ -3,3 +3,12 @@ description: "Flip dem bitties\r\n"
 main: com.nullblock.vemacs.bitwise.Bitwise
 name: Bitwise
 version: '1.0'
+commands:
+   bitwise:
+      description: reloads bitwise
+      usage: /bitwise
+      permission: bitwise.reload
+permissions:
+   bitwise.reload:
+      description: reloads bitwise
+      default: op

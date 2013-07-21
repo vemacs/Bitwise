@@ -1,11 +1,13 @@
 package com.nullblock.vemacs.bitwise;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Random;
@@ -90,6 +92,16 @@ public class Bitwise extends JavaPlugin implements Listener {
         }
         return true;
     }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+        if(sender.hasPermission("bitwise.reload") && cmd.getName().equalsIgnoreCase("bitwise")){
+            this.reloadConfig();
+            sender.sendMessage(ChatColor.GREEN + "Reloaded Bitwise.");
+            return true;
+        }
+        return false;
+    }
+
 
 }
 
