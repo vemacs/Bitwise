@@ -17,6 +17,7 @@ public class Bitwise extends JavaPlugin implements Listener {
     public static int ratio;
     public static int min;
     public static int swaps;
+    public static int special;
 
     public void onDisable() {
     }
@@ -27,6 +28,7 @@ public class Bitwise extends JavaPlugin implements Listener {
         ratio = this.getConfig().getInt("ratio");
         min = this.getConfig().getInt("min");
         swaps = this.getConfig().getInt("swaps");
+        special = this.getConfig().getInt("special");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -41,7 +43,10 @@ public class Bitwise extends JavaPlugin implements Listener {
 
     public static String parse(String s) {
         if (isSuspicious(s)) {
-            return operate(s);
+            s = operate(s);
+        }
+        if (s.length() >= min && getSanitization(s)) {
+            s = s.replaceAll("[^a-zA-Z0-9]+","");
         }
         return s;
     }
@@ -54,6 +59,16 @@ public class Bitwise extends JavaPlugin implements Listener {
             return true;
         }
         if (((double) (s.length()) / ((double) StringUtils.countMatches(s, " "))) >= (double) ratio) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean getSanitization(String s) {
+        int length = s.length();
+        int sanitized = s.replaceAll("[^\\w\\s\\.]", "").length();
+        float f = (float) length / (float) (length - sanitized);
+        if (f <= special) {
             return true;
         }
         return false;
